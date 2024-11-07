@@ -1,0 +1,76 @@
+							CRYPTOGRAPHY
+
+è applicata ovunque: SSL, HTTPS, Blockchain, WhatsApp, ecc...
+
+2 tipologie:
+
+	- nascondere informazioni
+	- autenticazione e integrità del messaggio
+
+plaintext == testo in chiaro
+chypertext == testo cifrato [incomprensibile da chi non conosce il metodo di cifratura]
+
+primitive crittografiche == funzioni base che permetto la crittografia di plaintext
+
+
+ - Crittografia SIMMETRICA [AES]:
+ 	la chiave per cifrare / decifrare è la stessa
+
+ - Crittogrfia ASIMMETRICA [RSA]:
+ 	chiave per cifrare != chiave da decifrare
+	chiave pubblica conoscibile a tutti
+	chiave privato deve averla il numero minimo di persone
+
+
+ - Cifrario di Cesare
+
+data la stringa si fa uno shift di n posizioni delle lettere dall'alfabeto
+
+plaintext = "ciro"	n = 3
+
+cypertext = "f"
+
+
+ - Operatore XOR
+
+return 1 if A != B
+
+ha un roulo fondamentale nella crittografia, ha il 50% di probabilità di dare 1
+è invertibile
+
+
+OTP [One Time Pad]
+
+
+
+ - Protocollo Dieffie-Hellman
+
+nato nel 1976 permetto lo scambio di una chiave segreta in un canale pubblico
+
+usato in:
+ 	TLS/SLL
+	SSH
+	IPSEC
+	WPA3
+	VPN
+	...
+
+alla base del logaritmo c'è il problam del logaritmo discreto
+
+		g^x = c(mod p)
+
+p == numero primo molto molto grande
+
+A e B si fanno delle chiavi private con cui calcolano la chiave pubblica da condividere con l'altra persone
+
+è vulnerabile al Man in the Middle, e alla risoluzione della forumula
+						|
+						|
+			risolvibile con un certificato
+			digitale sulle chiavi
+
+il logaritmo discreto risolvibile tramite:
+ - Baby step - Giant step
+ - Pohling - Hellman
+ - Pollard's Rho
+ - Shor's Algorithm [mediante computazione quantistica]

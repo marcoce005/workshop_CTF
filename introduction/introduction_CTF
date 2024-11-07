@@ -1,0 +1,29 @@
+							CTF
+					[Capture The Flag]
+
+Competizioni individuali / team con lo scopo di predenre la bandiera nascosta nel sito / oggetto
+
+flag format: pmt{...}
+
+tipi:
+	 - Jeopardy categorie: [rev, pwn, cryptography, web, Misc]
+	 - Attack / Defense
+
+rev == reverse engeeering
+pwn == si cerca di dirottare un eseguibile in run-time [es. prendere i permessi di root, buffer overflow]
+cryptography == capire la crittografia e romperla
+
+Attack / Defense:
+	si ha una macchina con servizi [uguali per tutti]
+	obbitiettivo: attaccare gli altri e difendersi da gli altri
+
+
+							LINUX
+
+connessioni remote
+	SSH
+	netcat
+	curl
+
+
+scripting in python / bash
