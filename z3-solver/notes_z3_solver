@@ -1,0 +1,23 @@
+z3-solver --> tool per analisi di un software
+
+è un theorem prover --> prova i teoremi datigli
+
+SMT solver --> SMT == problema informatico risolve espessioni affinche siano vere [es. x & y & (x ^ z)]
+
+è in grado di fare calcoli con variabili simboliche [non valgono niente]
+
+è utilizzato per:
+	creare modelli z3 per risolvere es. una sequenza di input per raggiungere determinati punti del codice
+
+
+tipi di variabile:
+	Int
+	Real
+	Bool
+	BitVec [bitsize]
+
+operatori:
+	And
+	Or
+	Xor
+	Not
