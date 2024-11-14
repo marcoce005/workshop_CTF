@@ -1,0 +1,28 @@
+reverse engineering --> analizzare il funzionamento di un processo, applicazione, ecc...
+
+Con l'obbiettivo di trovare vulnerabilità per fixarle o sfruttarle
+
+Compilazione:
+	processo che traduce in codice human readable in linguaggio macchina
+
+	source file --> preprocessor [.i file] --> compiler [.s file] --> assembler [.o file] --> linker [file eseguibile]
+
+	si ha della perdita di info [lossy]
+
+Decompilazione:
+	il decompilatore disassembla [ghidra, IDA, Binary Ninja, Jadx (per APK)] l'eseguibile in codice assembly human readable
+
+
+APK [Android Package Kit]:
+	è il formato di file che android usa [molto simile al java]
+
+	è un archivio compresso che contiene anche dei metadati
+
+	nel Manifest [file xml] dice al telefoni chi fa che cosa
+
+	le attivita [activity] ~= funzioni
+
+	nel manifest sono presenti anche tutti i permessi verso l'app e per comunicare con le altre app
+
+	Compilazione dell'apk:
+		java source code --> java compiler --> java bytecode [.class file] --> dex compiler --> Dalvik bytecode [.dex file] --> Dalvik VM

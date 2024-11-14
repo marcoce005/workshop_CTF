@@ -12,11 +12,11 @@ def all_keys():
     for i in range(0, 26):
         key = "".join([alphabet[i:], alphabet[0 : i]])
         plain = decrypt("xcqv{gvyavn_zvztv_etvtddlnxcgy}", key)
-        print(f"\n\t\t{key}\t\t{plain}")
+        print(f"\n\n{key}\t\t{plain}\n")
         for j in range(0, 26):
-            key = "".join([alphabet[j:], alphabet[0 : j]])
-            chyper = encrypt(plain, key)
-            print(f"{key}\t{chyper}")
+            key2 = "".join([alphabet[j:], alphabet[0 : j]])
+            chyper = encrypt(plain, key2)
+            print(f"{key2}\t{chyper}")
 
 def generateKey():
     start = random.randint(1, 25)
@@ -44,20 +44,58 @@ def encrypt(plain, key):
 
     return ciphertext
 
-def decrypt(chyper, key):
-    plain = ""
-    for k in range(len(chyper)):
-        if chyper[k].isalpha():
-            key = "".join([key[1:], key[0]])        # shift rigth key ["1234" --> "2341"]
-            i = key.index(chyper[k])
-            char = alphabet[i]
-            plain += char
+# def decrypt(chyper, key):
+#     plain = ""
+#     for k in range(len(chyper)):
+#         if chyper[k].isalpha():
+#             key = "".join([key[1:], key[0]])        # shift rigth key ["1234" --> "2341"]
+#             i = key.index(chyper[k])
+#             char = alphabet[i]
+#             plain += char
+#         else:
+#             plain += chyper[k]
+#     return plain
+
+
+def decrypt(ciphertext, key):
+    plaintext = ""
+    
+    # Itera su ogni carattere nel testo cifrato
+    for k in range(len(ciphertext)):
+        character = ciphertext[k]
+
+        # Verifica se il carattere è una lettera maiuscola
+        if ord(character) <= 90 and ord(character) >= 65:
+            # Trova la posizione del carattere cifrato nella chiave, convertendolo in minuscolo
+            i = key.index(chr(ord(character) + 32))
+            # Ottieni la lettera dell'alfabeto originale corrispondente (in maiuscolo)
+            characterDecrypted = chr(ord('a') + i).upper()
+            # Ripristina la chiave al passo precedente (rotazione inversa)
+            key = "".join([key[1:], key[0]])
+            # Aggiungi il carattere decifrato al testo in chiaro
+            plaintext = "".join([plaintext, characterDecrypted])
+        
+        # Verifica se il carattere è una lettera minuscola
+        elif ord(character) <= 122 and ord(character) >= 97:
+            # Trova la posizione del carattere cifrato nella chiave
+            i = key.index(character)
+            # Ottieni la lettera dell'alfabeto originale corrispondente
+            characterDecrypted = chr(ord('a') + i)
+            # Ripristina la chiave al passo precedente (rotazione inversa)
+            key = "".join([key[1:], key[0]])
+            # Aggiungi il carattere decifrato al testo in chiaro
+            plaintext = "".join([plaintext, characterDecrypted])
+        
+        # Mantieni i caratteri non alfabetici inalterati
         else:
-            plain += chyper[k]
-    return plain
+            plaintext = "".join([plaintext, character])
+
+    return plaintext
+
+
 
 def handle():
-    plaintextFLAG = "aaaa{aaaaaa_aaaaa_aaaaaaaaaaaa}"
+    plaintextFLAG = "xbos{cqstne_pkngh_pdebkjqraehy}"
     key = generateKey()
     ciphertext = encrypt(plaintextFLAG, key)
     print(ciphertext)
@@ -66,8 +104,7 @@ def handle():
 
 
 if __name__ == "__main__":
-    # handle()
-    print(f"key\t\tplain\nkey\tpossible cypher\n\n")
+    print(f"key\t\tplain\t\tchyper\n\n")
     all_keys()
-    
-    #handle()
+ 
+    # handle()
