@@ -20,4 +20,4 @@ with open('sudoku.txt') as f:
 sudoku = [x.strip().split() for x in sudoku]
 print_sudoku(sudoku)
 
-# Solve me!
+# ptm{126437958895621473374985126457193862983246517612578394269314785548769231731852649}
