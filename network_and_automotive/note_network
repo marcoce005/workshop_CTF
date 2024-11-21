@@ -1,0 +1,128 @@
+					NETWORK
+
+modello ISO/OSI [7 livelli]:
+ - Application --> servizi per l'utente
+ - Presentation --> (compressione, cifratura)
+ - Session --> gestisce le sessioni
+ - Transport --> trasporto dei messaggi
+ - Network --> sposta i pacchetti da sorgente al destinatario
+ - Data Link --> combina i bit in strutture dati
+ - Physical --> impostazioni fisiche per la trasmissione di dati
+
+è teorico non è mai stato implementato
+
+modello TCP/IP [4 livelli]:
+ - Application
+ - Transport
+ - Internet
+ - Network Acces
+
+ Layer 2, Ethernet:
+ 	i pacchetti sono detti frame
+	abbiamo il MAC (Media Access Control) univoco per ogni interfaccia di rete [48 bit] 01:02:03:aa:bb:cc
+
+Layer 3, Internet Protocol (IP):
+	IPv4 e IPv6
+	ogni pacchetto include IP della sorgente e del destinatario
+	IPv4 --> 32 bit [4 ottetti es. 192.168.10.10 (dot-notation)]
+	Indirizzi di network e di broadcast non possono essere assegnati a nessuno [net = 192.168.10.0, broad = 192.168.10.255]
+	
+Layer 4, TCP e UDP
+	protocolli di comunicazione connection-oriented [TCP] e connection-less [UDP]
+	hanno delle checksum per il controllo del pacchetto se è malformato --> TCP richiedi il rinvio, UDP lo scarta e basta
+	TCP è in grado di riordinare i paccheti ricevuti
+
+Layer 4, Porte:
+	abbiamo 2^16 porte da 0 a 65535
+	 - 0 è riservata
+	 - 0 --> 1000 sono le well-known ports [riservate a processi specifici (non utilizzabili)]
+	 - 1024 --> 48151 sono le registered ports
+	 - 49152 --> 65535 sono le porte effimere [porte dove vengono messe le risposte alle richieste internet]
+
+
+ - Modello client-server:
+il client fa la richiesta (request) il server risponde (response) la comunicazione avviene in base agli IP del mittente e destinatario e in base alle porte utilizzare [il server riceve anche le info del client nel pacchetto di richiesta]
+
+
+						NETWORK in CTF
+
+riceviamo un PCAP da analizzare
+
+per fare il dump dei pacchetti possiamo usare:
+	TCPDump --> only cli
+	Wireshark --> ha anche una GUI per analizzare e filtrare i pacchetti ma anche per catturare i pacchetti
+
+
+su wireshark si può usare follow per eseguire la comunicazione tra un client e un server
+
+Analisi di pacchetti e manipolazione:
+
+	Tshark --> wireshark per cli, supporta le stesse opzioni di wireshark
+
+	Pyshark --> è un wrapper fi Tshark per python è permette altro alle opzioni di filtraggio di wireshark anche la possibilità di calcolo di python 
+
+	es.
+
+import pyshark
+
+cap = pyshark.FileCapture('/path/to/pcap/file.pcap')
+
+for packet in cap:
+	# Check whether packet is TCP (check is case insensitive)
+	if 'tcp' in packet:
+		try:
+			print(packet.tcp.payload.binary_value)
+		except:
+			continue
+
+	Scapy --> potente manipolatore di pacchetti interattivo con librerie scritte in python, permette anche la creazione di pacchetti forgiati
+
+
+
+							SICUREZZA SU AUTOMOTIVE
+
+CAN [Controller Area Network]:
+	è un bus seriale broadcast, introdotto da Bosch negli anni '80, costo bassissimo
+
+	è usato per interconnettere le centraline delle macchine
+	è broadcast [non molto sicuro]
+	funziona con gli ID [l'ID più basso ha la precedenza]
+
+	tools:
+		candump & isotpdump:
+			tools to view and log can packets over a can bus
+
+		cansend & cangen:
+			tools to generate and send random and/or arbitrary can packets over a can bus
+
+		caring caribou & gallia:
+			tools to test the security of a can bus and connected devices
+
+		Scapy & python-can:
+			libraries to provide can bus support to python
+
+	Attacchi DOS:
+		DOS di messaggi con ID molto basso
+
+	Spoofing / replay:
+		ci si può con determinati tools sostituirsi ad delle ECU
+
+
+LIN [molto lento] usato per cose stupide (abbassare il finestrino)
+
+
+UDS [Unifield Diagnostic Services]:
+	protocollo di comunicazione usato per la diagnostica delle ECU
+
+	è basato su 3 livelli [UDSonCAN]:
+		- UDSonCAN
+		- ISO-TP
+		- CAN
+
+	usa le sessioni:
+		- sessione di deafult (0x01) --> visione limitata della diagnostica
+		- sessione di programmazione (0x02) --> per riprogrammare e flashare i firmware delle ECU
+
+		- sessione estesa (0x03) --> diagnostica avanzati
+
+	i pacchetti viaggiano sul CAN
