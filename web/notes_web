@@ -1,0 +1,44 @@
+BURP-SUITE
+
+agisce come proxy ed è in grado di analizzare ogni richiesta e rispedirla
+
+
+WEBHOOK
+
+usato per test XSS
+
+
+JWT [Json web token]
+
+cookie formattato in un certo modo che presenta anche una firma digitale
+
+tre parti:
+	- header --> con quale algoritmo viene firmato
+	- payload
+	- signature
+
+
+COOKIE
+
+dati salvati nel browser
+
+
+XSS
+
+permette di eseguire codice JS all'interno del browser, anche se non si potrebbe
+
+tre tipi:
+	- Reflected XSS --> codice JS nella richiesta [attraverso i messaggi di errore]
+	- Stored XSS
+	- DOM-based XSS
+
+
+DB and SQL
+
+le query più spessso usate sono le SELECT le quali possono essere usate per fare l'SQL inject
+
+tipi di SQL injection:
+	- logic
+	- union
+	- blind
+	- time based
